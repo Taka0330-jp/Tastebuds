@@ -1,65 +1,21 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { DisplayH2 } from "../typography/DisplayH2";
 
 export default function RecentPosts() {
     const sectionRef = useRef<HTMLElement | null>(null);
 
-    useLayoutEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        const ctx = gsap.context(() => {
-            const q = gsap.utils.selector(sectionRef);
-
-            ScrollTrigger.matchMedia({
-                "(max-width: 767px)": () => {
-                    gsap.fromTo(
-                        q(".recent-skyline"),
-                        { y: -100 },
-                        {
-                            y: -300,
-                            ease: "none",
-                            scrollTrigger: {
-                                trigger: sectionRef.current,
-                                start: "top bottom",
-                                end: "top top",
-                                scrub: true,
-                            },
-                        }
-                    );
-                },
-
-
-                "(min-width: 768px)": () => {
-                    gsap.fromTo(
-                        q(".recent-skyline"),
-                        { y: -180 },
-                        {
-                            y: -640,
-                            ease: "none",
-                            scrollTrigger: {
-                                trigger: sectionRef.current,
-                                start: "top bottom",
-                                end: "top top",
-                                scrub: true,
-                            },
-                        }
-                    );
-                },
-            });
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section ref={sectionRef} className="bg-home-section py-12 relative">
+        <section
+            ref={sectionRef}
+            className="bg-home-section py-12 relative z-10 mt-[80vh]"
+        >
             <Image
-                className="recent-skyline  absolute left-0 top-0 w-full h-auto z-10 pointer-events-none object-contain md:object-cover object-top"
+                className="recent-skyline absolute -translate-y-70 w-full h-auto z-10 pointer-events-none object-contain md:object-cover object-top"
                 src="/images/ui/skyline.svg"
                 alt=""
                 fill

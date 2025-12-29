@@ -4,7 +4,7 @@ import CtaPrimary from "@/components/typography/CtaPrimary";
 
 export default function Header() {
     return (
-        <header className="w-full bg-header fixed z-50">
+        <header className="w-full bg-header fixed z-50 top-0">
             <nav className="flex justify-between items-center max-w-container mx-auto px-4 py-2 ">
                 <Link href="/" aria-label="Home">
                     <Image

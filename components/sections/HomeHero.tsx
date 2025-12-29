@@ -5,9 +5,7 @@ import MouthStroke from "../animation/mouthStroke";
 
 export default function HomeHero() {
     return (
-        <section
-            className="home-hero relative overflow-hidden h-[80vh]"
-        >
+        <section className="home-hero fixed inset-x-0 top-0 h-[80vh] overflow-hidden z-0">
             <div className="flex flex-col gap-1.5 md:grid md:grid-cols-12 max-w-container mx-auto p-5 relative z-10 mt-10 mb-20 md:mt-20 lg:mt-30">
                 <div className="flex flex-col gap-1 md:col-start-1 md:col-span-7">
                     <DisplayH1 className="text-text-inverse">
