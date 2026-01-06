@@ -1,13 +1,18 @@
-export function BodySm({ children }: { children: React.ReactNode }) {
+export function BodySm({ children, className = "", }: {
+    children: React.ReactNode;
+    className?: string;
+}) {
     return (
         <p
-            className="
+            className={`
         font-mono font-medium
         leading-[1.4]   
-      "
-            style={{ fontSize: "var(--fs-body-sm)" }}
+        ${className}`
+            }
+            style={{ fontSize: "var(--fs-body-sm)" }
+            }
         >
             {children}
-        </p>
+        </p >
     );
 }

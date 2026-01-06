@@ -1,5 +1,5 @@
 "use client";
-import { DisplayH1 } from "../typography/ DisplayH1";
+import { DisplayH1 } from "../typography/DisplayH1";
 import { BodyXlg } from "../typography/BodyXlg";
 import MouthStroke from "../animation/mouthStroke";
 
