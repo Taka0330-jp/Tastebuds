@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import CtaPrimary from "@/components/typography/CtaPrimary";
+import { CtaPrimary } from "@/components/typography/CtaPrimary";
 
 export default function Header() {
     return (

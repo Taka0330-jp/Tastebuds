@@ -6,7 +6,7 @@ type CtaPrimaryProps = {
     asChild?: boolean;
 };
 
-export default function CtaPrimary({
+export function CtaPrimary({
     children,
     className = "",
     asChild = false,

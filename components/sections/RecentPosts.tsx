@@ -43,11 +43,11 @@ export default function RecentPosts({ posts }: Props) {
             </div>
 
             {/* BLOG CARDS */}
-            <div className="md:grid md:grid-cols-12 gap-6 max-w-container mx-auto p-5  relative z-10">
+            <div className="flex flex-col gap-6 md:grid md:grid-cols-12 max-w-container mx-auto p-5 relative z-10">
                 <div className="col-span-12">
                     {posts[0] ? <BlogCardL posts={posts[0]} /> : null}
                 </div>
-                <div className="md:col-span-12 grid gap-6 md:grid-cols-3">
+                <div className="gap-6 md:col-span-12 grid md:grid-cols-3">
                     {posts[1] ? <BlogCardM posts={posts[1]} /> : null}
                     {posts[2] ? <BlogCardM posts={posts[2]} /> : null}
                     {posts[3] ? <BlogCardM posts={posts[3]} /> : null}

@@ -5,6 +5,7 @@ export type PostCard = {
     slug: string;
     title: string;
     excerpt: string | null;
+    tags: string[] | string | null;
     location: string | null;
     published_at: string | null;
     cover_image_path: string | null;
@@ -31,6 +32,7 @@ export async function getRecentPosts(limit = 4): Promise<PostCard[]> {
       slug,
       title,
       excerpt,
+      tags,
       location,
       published_at,
       created_at,

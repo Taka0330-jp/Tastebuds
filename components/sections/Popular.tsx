@@ -1,4 +1,4 @@
-import { ArticleH1 } from "../typography/ArticleH1";
+import { DisplayH2 } from "../typography/DisplayH2";
 import Image from "next/image";
 import BlogCardM from "../CardM";
 export default function Popular() {
@@ -6,9 +6,9 @@ export default function Popular() {
         <>
             <section className="bg-home-section relative z-10">
                 <div className="flex gap-4 max-w-container mx-auto p-5 relative z-10">
-                    <ArticleH1 className="text-text-inverse">
+                    <DisplayH2 className="text-text-inverse">
                         Popular
-                    </ArticleH1>
+                    </DisplayH2>
                     <Image
                         src="/images/icons/popularIcon.svg"
                         alt="Popular"
