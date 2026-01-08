@@ -1,9 +1,11 @@
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-export function ArticleH3({ as: Tag = "h3", children, className = "", }: {
+
+type HeadingH3Props = {
     as?: HeadingTag
     children: React.ReactNode;
     className?: string;
-}) {
+}
+export function ArticleH3({ as: Tag = "h3", children, className = "", }: HeadingH3Props) {
     return (
         <Tag
             className={`

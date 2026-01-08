@@ -18,11 +18,11 @@ export default function RecentPosts({ posts }: Props) {
     return (
         <section
             ref={sectionRef}
-            className="bg-home-section py-12 relative z-10 mt-[80vh]"
+            className="bg-home-section py-12 relative z-10 mt-[90vh]"
         >
             {/* SKYLINE IMAGE */}
             <Image
-                className="recent-skyline absolute -translate-y-70 w-full h-auto z-10 pointer-events-none object-contain md:object-cover object-top"
+                className="recent-skyline absolute -translate-y-30 md:-translate-y-70 w-full h-auto z-10 pointer-events-none object-contain md:object-cover object-top"
                 src="/images/ui/skyline.svg"
                 alt=""
                 fill
