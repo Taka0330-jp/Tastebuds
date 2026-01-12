@@ -1,10 +1,11 @@
-export function BodyBase({ children }: { children: React.ReactNode }) {
+export function BodyBase({ children, className = "", }: { children: React.ReactNode, className?: string }) {
     return (
         <p
-            className="
+            className={`
         font-mono font-medium
         leading-[1.4]   
-      "
+        ${className}
+            `}
             style={{ fontSize: "var(--fs-body)" }}
         >
             {children}

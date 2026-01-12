@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import SearchBar from "./SearchBar";
+import InstagramIcon from "./icons/InstagramIcon";
+import TikTokIcon from "./icons/TikTok";
+import SearchBar from "./ui/SearchBar";
 export default function Footer() {
     return (
         <>
@@ -28,35 +30,40 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Instagram"
+                                className="    text-white text-2xl
+    transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60"
                             >
-                                <Image
-                                    src="/images/icons/instagram.svg"
-                                    alt=""
-                                    width={24}
-                                    height={24}
-                                />
+                                <InstagramIcon />
                             </a>
                             <a
                                 href="https://www.tiktok.com/@tastebudsvan"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="TikTok"
+                                className="
+                                text-white text-2xl
+    transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60"
                             >
-                                <Image
-                                    src="/images/icons/tiktok.svg"
-                                    alt=""
-                                    width={24}
-                                    height={24}
-                                />
+                                <TikTokIcon />
                             </a>
                         </div>
                         <div className="flex items-center gap-8 text-text-inverse pt-4">
-                            <Link href="/blog">
-
+                            <Link href="/blog" className="transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60">
                                 Blog
-
                             </Link>
-                            <Link href="/contact">
+                            <Link href="/contact" className="transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60">
                                 Contact
                             </Link>
                             <div className="w-full">

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import InstagramIcon from "./icons/InstagramIcon";
+import TikTokIcon from "./icons/TikTok";
 import { CtaPrimary } from "@/components/typography/CtaPrimary";
 
 export default function Header() {
@@ -17,12 +19,18 @@ export default function Header() {
                 </Link>
                 <div className="flex gap-8">
                     <Link href="/blog">
-                        <CtaPrimary asChild className="text-text-inverse">
+                        <CtaPrimary asChild className="text-text-inverse transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60">
                             Blog
                         </CtaPrimary>
                     </Link>
                     <Link href="/contact">
-                        <CtaPrimary asChild className="text-text-inverse">
+                        <CtaPrimary asChild className="text-text-inverse transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60">
                             Contact
                         </CtaPrimary>
                     </Link>
@@ -31,26 +39,26 @@ export default function Header() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Instagram"
+                        className="    text-white text-2xl
+    transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60"
                     >
-                        <Image
-                            src="/images/icons/instagram.svg"
-                            alt=""
-                            width={24}
-                            height={24}
-                        />
+                        <InstagramIcon />
                     </a>
                     <a
                         href="https://www.tiktok.com/@tastebudsvan"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="TikTok"
+                        className="    text-white text-2xl
+    transition-opacity
+    hover:opacity-70
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-white/60"
                     >
-                        <Image
-                            src="/images/icons/tiktok.svg"
-                            alt=""
-                            width={24}
-                            height={24}
-                        />
+                        <TikTokIcon />
                     </a>
                 </div>
             </nav>

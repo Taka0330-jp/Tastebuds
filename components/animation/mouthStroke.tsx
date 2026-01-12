@@ -1,18 +1,22 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 type MouthStrokeProps = {
     className?: string;
-    duration?: number; // seconds
-    delay?: number; // seconds
+    duration?: number;
+    delay?: number;
+    playOnMount?: boolean;
+    onReady?: (tl: gsap.core.Timeline) => void;
 };
 
 export default function MouthStroke({
     className = "",
     duration = 1.1,
     delay = 0.1,
+    playOnMount = false,
+    onReady,
 }: MouthStrokeProps) {
     const pathRef = useRef<SVGPathElement | null>(null);
 
@@ -30,7 +34,7 @@ export default function MouthStroke({
         });
 
         //animation
-        const tl = gsap.timeline();
+        const tl = gsap.timeline({ paused: !playOnMount });
         tl.to(path, {
             strokeDashoffset: 0,
             duration,
@@ -38,10 +42,12 @@ export default function MouthStroke({
             ease: "power2.out",
         });
 
+        onReady?.(tl);
+
         return () => {
             tl.kill();
         };
-    }, [duration, delay]);
+    }, [duration, delay, playOnMount, onReady]);
 
     return (
         <svg
@@ -60,7 +66,10 @@ export default function MouthStroke({
                 strokeWidth="30.0476px"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ overflow: "visible" }}
+                style={{
+                    overflow: "visible",
+                    strokeDashoffset: 9999,
+                }}
             />
         </svg>
     );

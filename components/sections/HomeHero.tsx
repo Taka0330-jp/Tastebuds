@@ -16,7 +16,7 @@ export default function HomeHero() {
                     </BodyXlg>
                 </div>
 
-                <MouthStroke className="mouth-stroke md:col-start-8 md:col-span-5" />
+                <MouthStroke className="mouth-stroke md:col-start-8 md:col-span-5 z-0" playOnMount={true} />
             </div>
 
         </section>
