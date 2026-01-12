@@ -16,44 +16,58 @@ export default function PinnedAnimationSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const strokeTlRef = useRef<gsap.core.Timeline | null>(null);
 
+    const pinnedOnceRef = useRef(false);
+    const hasEnteredRef = useRef(false);
+
 
     useEffect(() => {
         if (!sectionRef.current) return;
-        const tl = gsap.timeline({
-            scrollTrigger: {
+        if (pinnedOnceRef.current) return;
+
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+
+            tl.add(() => {
+                strokeTlRef.current?.pause(0).play(0);
+            })
+                .from(".title", { opacity: 0, y: 40, duration: 0.6 })
+                .from(".body", { opacity: 0, y: 40, duration: 0.6 }, "<0.1");
+
+            const st = ScrollTrigger.create({
                 trigger: sectionRef.current,
                 start: "top top",
-                end: "+=100%",
+                end: () => "+=" + window.innerHeight,
                 pin: true,
                 pinSpacing: true,
                 scrub: false,
-            },
-        });
+                invalidateOnRefresh: true,
 
+                onEnter: () => {
+                    hasEnteredRef.current = true;
+                    tl.play(0);
+                },
 
-        tl.add(() => {
-            strokeTlRef.current?.pause(0).play(0);
-        }, ">")
-            .from(".title", {
-                opacity: 0,
-                y: 40,
-                duration: 0.6,
-                ease: "power3.out",
-            })
-            .from(".body", {
-                opacity: 0,
-                y: 40,
-                duration: 0.6,
-                ease: "power3.out",
-            })
+                onEnterBack: () => {
+                    // 2回目以降は pin しない設計なら、戻ってきたら何もしない/または即解除
+                    // ここは好みで。必要なら tl を再生しないなど。
+                },
 
+                onLeave: () => {
+                    // 「実際に入った」後に「出た」場合だけ 1回扱いにして kill
+                    if (!hasEnteredRef.current) return;
 
+                    pinnedOnceRef.current = true;
+                    st.kill(true); // pin解除 + spacer除去
+                },
+            });
 
+            return () => {
+                st.kill();
+                tl.kill();
+            };
+        }, sectionRef);
 
-        return () => {
-            tl.kill();
-            ScrollTrigger.killAll();
-        };
+        return () => ctx.revert();
     }, []);
     return (
         <section

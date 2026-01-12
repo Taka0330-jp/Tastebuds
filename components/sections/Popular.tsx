@@ -1,6 +1,6 @@
 import { DisplayH2 } from "../typography/DisplayH2";
 import Image from "next/image";
-import BlogCardM from "../CardM";
+import BlogCardM from "../ui/CardM";
 export default function Popular() {
     return (
         <>

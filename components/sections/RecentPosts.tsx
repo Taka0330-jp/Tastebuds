@@ -1,7 +1,7 @@
 "use client";
 
-import BlogCardM from "../CardM";
-import BlogCardL from "../CardL";
+import BlogCardM from "../ui/CardM";
+import BlogCardL from "../ui/CardL";
 import { useRef } from "react";
 
 import Image from "next/image";

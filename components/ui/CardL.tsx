@@ -1,7 +1,6 @@
-import { ArticleH1 } from "./typography/ArticleH1";
-import { BodyLg } from "./typography/BodyLg";
-// import { CtaSecondary } from "./typography/CtaSecondary";
-import { CtaPrimary } from "./typography/CtaPrimary";
+import { ArticleH1 } from "../typography/ArticleH1";
+import { BodyLg } from "../typography/BodyLg";
+import { CtaPrimary } from "../typography/CtaPrimary";
 import { PostCard } from "@/lib/posts";
 import Image from "next/image";
 
