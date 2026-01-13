@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { uploadPostImage } from "@/lib/supabase/uploadPostImage";
 
+// Shadcn UI
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,10 +40,17 @@ export default function AdminNewPostPage() {
     const [excerpt, setExcerpt] = useState("");
 
     // ✅ NEW: date, location, tags
-    const [postDate, setPostDate] = useState(""); // datetime-local string
+    const [postDate, setPostDate] = useState(""); // date string
     const [location, setLocation] = useState("");
+    const [author, setAuthor] = useState("");
     const [tagInput, setTagInput] = useState("");
     const [tags, setTags] = useState<string[]>([]);
+
+    // Cover image
+    const [coverImageUrl, setCoverImageUrl] = useState("");
+    const [coverImageAlt, setCoverImageAlt] = useState("");
+    const [coverImageCaption, setCoverImageCaption] = useState("");
+    const [coverUploading, setCoverUploading] = useState(false);
 
     // Blocks
     const [blocks, setBlocks] = useState<Block[]>([
@@ -99,6 +107,19 @@ export default function AdminNewPostPage() {
         }
     };
 
+    const handleCoverImagePick = async (file: File) => {
+        setPageError(null);
+        setCoverUploading(true);
+        try {
+            const url = await uploadPostImage(file);
+            setCoverImageUrl(url);
+        } catch (e: unknown) {
+            setPageError(e instanceof Error ? e.message : "Cover image upload failed.");
+        } finally {
+            setCoverUploading(false);
+        }
+    };
+
     // ✅ NEW: Tags helpers
     const normalizeTag = (raw: string) => raw.trim().replace(/\s+/g, " ");
 
@@ -149,7 +170,11 @@ export default function AdminNewPostPage() {
             excerpt,
             postDate, // ✅
             location, // ✅
+            author,
             tags, // ✅
+            coverImageUrl,
+            coverImageAlt,
+            coverImageCaption,
             blocks,
         });
     };
@@ -376,6 +401,68 @@ export default function AdminNewPostPage() {
 
                     {/* Right: Meta / Settings */}
                     <div className="space-y-6">
+                        {/* Cover Image */}
+                        <Card className="rounded-2xl bg-white">
+                            <CardHeader>
+                                <CardTitle>Cover Image</CardTitle>
+                                <CardDescription>Thumbnail for post cards and share previews.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                {coverImageUrl ? (
+                                    <div className="space-y-3">
+                                        <img
+                                            src={coverImageUrl}
+                                            alt={coverImageAlt || coverImageCaption || ""}
+                                            className="w-full rounded-xl border"
+                                        />
+                                        <div className="text-xs text-black/60 break-all">{coverImageUrl}</div>
+                                        <div>
+                                            <Button type="button" variant="outline" onClick={() => setCoverImageUrl("")}>
+                                                Remove cover
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="rounded-xl border p-4 text-sm text-black/70">
+                                        No cover image yet. Upload one below.
+                                    </div>
+                                )}
+
+                                <Input
+                                    type="file"
+                                    accept="image/*"
+                                    disabled={coverUploading}
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (!file) return;
+                                        void handleCoverImagePick(file);
+                                        e.currentTarget.value = "";
+                                    }}
+                                />
+                                {coverUploading && <p className="text-xs text-black/60">Uploading...</p>}
+
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                    <div className="space-y-2">
+                                        <Label>Alt</Label>
+                                        <Input
+                                            value={coverImageAlt}
+                                            onChange={(e) => setCoverImageAlt(e.target.value)}
+                                            placeholder="Short description for accessibility"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label>Caption</Label>
+                                        <Input
+                                            value={coverImageCaption}
+                                            onChange={(e) => setCoverImageCaption(e.target.value)}
+                                            placeholder="Optional caption"
+                                        />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
                         {/* ✅ NEW: Date / Location / Tags */}
                         <Card className="rounded-2xl bg-white">
                             <CardHeader>
@@ -389,7 +476,7 @@ export default function AdminNewPostPage() {
                                     <Label htmlFor="postDate">Date</Label>
                                     <Input
                                         id="postDate"
-                                        type="datetime-local"
+                                        type="date"
                                         value={postDate}
                                         onChange={(e) => setPostDate(e.target.value)}
                                     />
@@ -404,6 +491,17 @@ export default function AdminNewPostPage() {
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         placeholder="e.g. Richmond, BC"
+                                    />
+                                </div>
+
+                                {/* Author */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="author">Author</Label>
+                                    <Input
+                                        id="author"
+                                        value={author}
+                                        onChange={(e) => setAuthor(e.target.value)}
+                                        placeholder="e.g. John Smith"
                                     />
                                 </div>
 
@@ -448,17 +546,7 @@ export default function AdminNewPostPage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="rounded-2xl bg-white">
-                            <CardHeader>
-                                <CardTitle>Tips</CardTitle>
-                                <CardDescription>How blocks work.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-2 text-sm text-black/70">
-                                <p>Use Add Text / Add Image to create blocks.</p>
-                                <p>Use arrow buttons to change the order.</p>
-                                <p>Images are uploaded to Supabase Storage and stored as public URLs.</p>
-                            </CardContent>
-                        </Card>
+
 
                         {/* Actions */}
                         <Card className="rounded-2xl bg-white">
