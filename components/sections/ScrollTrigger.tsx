@@ -48,12 +48,9 @@ export default function PinnedAnimationSection() {
                 },
 
                 onEnterBack: () => {
-                    // 2回目以降は pin しない設計なら、戻ってきたら何もしない/または即解除
-                    // ここは好みで。必要なら tl を再生しないなど。
                 },
 
                 onLeave: () => {
-                    // 「実際に入った」後に「出た」場合だけ 1回扱いにして kill
                     if (!hasEnteredRef.current) return;
 
                     pinnedOnceRef.current = true;
@@ -91,8 +88,8 @@ export default function PinnedAnimationSection() {
                     className="z-30
                     inline-flex h-28 w-28 items-center justify-center rounded-full
                     transition 
-                    bg-black-3 text-brand-primary
-                    hover:bg-brand-primary hover:text-black-3
+                    bg-black text-brand-primary
+                    hover:bg-brand-primary hover:text-brand-secondary
                     focus-visible:outline-none
     focus-visible:ring-2
     
@@ -107,9 +104,8 @@ export default function PinnedAnimationSection() {
                     className="z-30
                     inline-flex h-28 w-28 items-center justify-center rounded-full
                                         transition 
-                    bg-black-3 text-brand-primary
-                    hover:bg-brand-primary hover:text-black-3
-                    focus-visible:outline-none
+                    bg-black text-brand-primary
+                    hover:bg-brand-primary hover:text-brand-secondary
     focus-visible:ring-2
     
                   ">

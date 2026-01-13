@@ -5,7 +5,7 @@ import EmailSignupBar from "../ui/SubscribeFrom";
 
 export default function SubscribeForm() {
     return (
-        <section className="bg-yellow-500 relative z-20">
+        <section className="bg-brand-primary relative z-20">
             <div className="flex flex-col items-center text-center">
                 <DisplayH2 as="h4" className="p-8">
                     Sign up for tasty updates
