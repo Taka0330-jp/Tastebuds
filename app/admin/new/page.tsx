@@ -1,5 +1,7 @@
 "use client";
 
+import { createPost } from "@/lib/posts/createPost"
+
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { uploadPostImage } from "@/lib/supabase/uploadPostImage";
@@ -152,7 +154,7 @@ export default function AdminNewPostPage() {
     };
 
     // UI only (no DB save yet)
-    const handleSave = () => {
+    const handleSave = async () => {
         setPageError(null);
 
         if (!title.trim()) {
@@ -164,19 +166,36 @@ export default function AdminNewPostPage() {
             return;
         }
 
-        console.log({
-            title,
-            slug,
-            excerpt,
-            postDate, // ✅
-            location, // ✅
-            author,
-            tags, // ✅
-            coverImageUrl,
-            coverImageAlt,
-            coverImageCaption,
-            blocks,
-        });
+        try {
+            const postId = await createPost({
+                title,
+                slug,
+                excerpt,
+                postDate,
+                location,
+                author,
+                tags,
+                coverImageUrl,
+                coverImageAlt,
+                coverImageCaption,
+                blocks: blocks.map((b) =>
+                    b.type === "text"
+                        ? { type: "text", text: b.text }
+                        : {
+                            type: "image",
+                            url: b.url,
+                            alt: b.alt,
+                            caption: b.caption,
+                        }
+                ),
+            });
+
+            // 成功後
+            console.log("Created post:", postId);
+            // router.push("/admin/posts"); ← 後で追加
+        } catch (e) {
+            setPageError(e instanceof Error ? e.message : "Save failed.");
+        }
     };
 
     return (
