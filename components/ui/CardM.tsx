@@ -53,7 +53,11 @@ export default function BlogCard({ posts }: Props) {
 
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
-                            <CtaPrimary key={tag} className="border border-white text-text-inverse px-2 rounded-2xl">
+                            <CtaPrimary
+                                key={tag}
+                                asChild
+                                className="border border-white text-text-inverse px-2 rounded-2xl"
+                            >
                                 {tag}
                             </CtaPrimary>
                         ))}
