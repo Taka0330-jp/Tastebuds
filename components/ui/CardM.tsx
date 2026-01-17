@@ -1,15 +1,23 @@
+"use client";
+
+import Image from "next/image";
 import { ArticleH3 } from "../typography/ArticleH3";
 import { BodySm } from "../typography/BodySm";
 import { CtaPrimary } from "../typography/CtaPrimary";
-
 import { PostCard } from "@/lib/posts";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
     posts?: PostCard;
 };
 
 export default function BlogCard({ posts }: Props) {
+    const router = useRouter();
+
     const title = posts?.title ?? "Card Heading title";
     const excerpt = posts?.excerpt ?? "Excerpt texts";
     const tags = Array.isArray(posts?.tags)
@@ -21,8 +29,28 @@ export default function BlogCard({ posts }: Props) {
     const location = posts?.location ?? "Location";
 
 
+
+    const handleGo = () => {
+        try {
+            ScrollTrigger.getAll().forEach((st) => st.kill(true));
+        } catch { }
+
+        router.push(`/blog/${posts?.slug}`);
+    };
+
+
     return (
-        <article className="group border border-white flex flex-col p-1">
+        <article
+            role="link"
+            tabIndex={0}
+            onClick={handleGo}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleGo();
+                }
+            }}
+            className="group border border-white flex flex-col p-1 cursor-pointer">
             {/* Thumbnail */}
             <div className="relative w-full h-80 overflow-hidden bg-amber-200">
                 {cover_url && (

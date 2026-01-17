@@ -9,22 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 function cleanupGSAP() {
     try {
-        // まず全STをrevert付きで安全に解除
         ScrollTrigger.getAll().forEach((st) => {
             try {
                 st.kill(true);
             } catch {
-                // kill(true) がコケる個体があれば revert無しで落とす
                 try { st.kill(false); } catch { }
             }
         });
 
-        // メモリ/状態もリセット
         ScrollTrigger.clearScrollMemory?.();
         ScrollTrigger.refresh(true);
 
-        // 走ってるtimelineも止めたいなら
-        // gsap.globalTimeline.clear();
+
     } catch { }
 }
 

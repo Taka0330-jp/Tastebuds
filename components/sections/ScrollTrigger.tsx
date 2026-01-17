@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DisplayH2 } from "../typography/DisplayH2";
@@ -13,56 +14,66 @@ import TikTokIcon from "../icons/TikTok";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PinnedAnimationSection() {
+    const pathname = usePathname();
+
     const sectionRef = useRef<HTMLDivElement>(null);
     const strokeTlRef = useRef<gsap.core.Timeline | null>(null);
 
-    const pinnedOnceRef = useRef(false);
+    const stRef = useRef<ScrollTrigger | null>(null);
+    const killedRef = useRef(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        if (!stRef.current) return;
+        if (killedRef.current) return;
+
+        killedRef.current = true;
+        try {
+            stRef.current.kill(true);
+        } catch {
+        }
+        stRef.current = null;
+    }, [pathname]);
+
+    useLayoutEffect(() => {
         if (!sectionRef.current) return;
-        if (pinnedOnceRef.current) return;
+
+        killedRef.current = false;
 
         const ctx = gsap.context(() => {
-            const q = gsap.utils.selector(sectionRef); // ✅スコープ
+            const q = gsap.utils.selector(sectionRef.current!);
 
             const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
-
             tl.add(() => {
-                const strokeTl = strokeTlRef.current;
-                if (!strokeTl) return;
-                strokeTl.pause(0);
-                strokeTl.play(0);
+                const s = strokeTlRef.current;
+                if (!s) return;
+                s.pause(0).play(0);
             })
                 .from(q(".title"), { opacity: 0, y: 40, duration: 0.6 })
                 .from(q(".body"), { opacity: 0, y: 40, duration: 0.6 }, "<0.1");
 
-            const st = ScrollTrigger.create({
-                trigger: sectionRef.current,
+            stRef.current = ScrollTrigger.create({
+                trigger: sectionRef.current!,
                 start: "top top",
                 end: () => "+=" + window.innerHeight,
                 pin: true,
                 pinSpacing: true,
                 scrub: false,
                 invalidateOnRefresh: true,
+                pinReparent: true,
+                onEnter: () => tl.play(0),
 
-                onEnter: () => {
-                    tl.play(0);
-                },
-
-                onLeave: () => {
-                    // ✅ kill(true) はやめる
-                    pinnedOnceRef.current = true;
-                    st.disable(true); // pin/spacerを安全に解除
-                },
             });
-
-            return () => {
-                st.kill(); // ✅cleanupでまとめてkill
-                tl.kill();
-            };
         }, sectionRef);
 
-        return () => ctx.revert();
+        return () => {
+
+            try {
+                stRef.current?.kill(true);
+            } catch { }
+            stRef.current = null;
+
+            ctx.revert();
+        };
     }, []);
 
     return (
@@ -77,6 +88,7 @@ export default function PinnedAnimationSection() {
                     strokeTlRef.current = strokeTl;
                 }}
             />
+
             <DisplayH2 as="h5" className="title z-30 p-8 text-center">
                 Join the Table
             </DisplayH2>
