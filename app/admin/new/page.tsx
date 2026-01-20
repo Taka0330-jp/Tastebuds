@@ -3,7 +3,7 @@
 import { createPost } from "@/lib/posts/createPost"
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { uploadPostImage } from "@/lib/supabase/uploadPostImage";
 
 // Shadcn UI
@@ -36,7 +36,61 @@ function moveItem<T>(arr: T[], from: number, to: number) {
     return copy;
 }
 
+
+// Auto save
+
+const DRAFT_STORAGE_KEY = "admin_new_post_draft_v1";
+
+type DraftPlayLoad = {
+    title: string;
+    slug: string;
+    excerpt: string;
+    postDate: string;
+    location: string;
+    author: string;
+    tags: string[];
+    coverImageUrl: string;
+    coverImageAlt: string;
+    coverImageCaption: string;
+    blocks: Block[];
+    updatedAt: number;
+};
+
+function safeParseDraft(raw: string | null): DraftPlayLoad | null {
+    if (!raw) return null;
+    try {
+        const parsed = JSON.parse(raw) as Partial<DraftPlayLoad>;
+        if (!parsed || typeof parsed !== "object") return null;
+
+        const blocks = Array.isArray(parsed.blocks) ? (parsed.blocks as Block[]) : null;
+        if (!blocks || blocks.length === 0)
+            return null;
+
+        return {
+            title: typeof parsed.title === "string" ? parsed.title : "",
+            slug: typeof parsed.slug === "string" ? parsed.slug : "",
+            excerpt: typeof parsed.excerpt === "string" ? parsed.excerpt : "",
+            postDate: typeof parsed.postDate === "string" ? parsed.postDate : "",
+            location: typeof parsed.location === "string" ? parsed.location : "",
+            author: typeof parsed.author === "string" ? parsed.author : "",
+            tags: Array.isArray(parsed.tags) ? (parsed.tags as string[]) : [],
+            coverImageUrl: typeof parsed.coverImageUrl === "string" ? parsed.coverImageUrl : "",
+            coverImageAlt: typeof parsed.coverImageAlt === "string" ? parsed.coverImageAlt : "",
+            coverImageCaption: typeof parsed.coverImageCaption === "string" ? parsed.coverImageCaption : "",
+            blocks,
+            updatedAt: typeof parsed.updatedAt === "number" ? parsed.updatedAt : Date.now(),
+        };
+    } catch {
+        return null;
+    }
+}
+
 export default function AdminNewPostPage() {
+
+    const autosaveTimerRef = useRef<number | null>(null);
+    const didHydrateDraftRef = useRef(false);
+
+
     // Post meta (UI only for now)
     const [title, setTitle] = useState("");
     const [slug, setSlug] = useState("");
@@ -65,6 +119,79 @@ export default function AdminNewPostPage() {
     const [uploadingIds, setUploadingIds] = useState<Record<string, boolean>>({});
 
     const canMoveUpDown = useMemo(() => blocks.length > 1, [blocks.length]);
+
+    // Load draft once on mount
+    useEffect(() => {
+        const draft = safeParseDraft(localStorage.getItem(DRAFT_STORAGE_KEY));
+        if (!draft) {
+            didHydrateDraftRef.current = true;
+            return;
+        }
+
+        setTitle(draft.title);
+        setSlug(draft.slug);
+        setExcerpt(draft.excerpt);
+        setPostDate(draft.postDate);
+        setLocation(draft.location);
+        setAuthor(draft.author);
+        setTags(draft.tags);
+        setCoverImageUrl(draft.coverImageUrl);
+        setCoverImageAlt(draft.coverImageAlt);
+        setCoverImageCaption(draft.coverImageCaption);
+        setBlocks(draft.blocks);
+
+        didHydrateDraftRef.current = true;
+    }, []);
+
+    // Debounced autosave to localStorage whenever editor state changes
+
+    useEffect(() => {
+        // Avoid saving the initial empty state before we attempt hydration.
+        if (!didHydrateDraftRef.current) return;
+        if (autosaveTimerRef.current) {
+            window.clearTimeout(autosaveTimerRef.current);
+        }
+
+        autosaveTimerRef.current = window.setTimeout(() => {
+            const playLoad: DraftPlayLoad = {
+                title,
+                slug,
+                excerpt,
+                postDate,
+                location,
+                author,
+                tags,
+                coverImageUrl,
+                coverImageAlt,
+                coverImageCaption,
+                blocks,
+                updatedAt: Date.now(),
+            };
+
+            try {
+                localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(playLoad));
+            } catch (e) {
+                console.warn("Autosave failed", e);
+            }
+        }, 500);
+        return () => {
+            if (autosaveTimerRef.current) {
+                window.clearTimeout(autosaveTimerRef.current);
+            }
+        };
+    }, [
+        title,
+        slug,
+        excerpt,
+        postDate,
+        location,
+        author,
+        tags,
+        coverImageUrl,
+        coverImageAlt,
+        coverImageCaption,
+        blocks,
+    ]);
 
     const addTextBlock = () => {
         setBlocks((prev) => [...prev, { id: crypto.randomUUID(), type: "text", text: "" }]);
@@ -192,6 +319,7 @@ export default function AdminNewPostPage() {
             });
 
             console.log("Created post:", postId);
+            localStorage.removeItem(DRAFT_STORAGE_KEY);
         } catch (e) {
             setPageError(e instanceof Error ? e.message : "Save failed.");
         }
@@ -472,7 +600,7 @@ export default function AdminNewPostPage() {
                             </CardContent>
                         </Card>
 
-                        {/* ✅ NEW: Date / Location / Tags */}
+                        {/*  Date / Location / Tags */}
                         <Card className="rounded-2xl bg-white">
                             <CardHeader>
                                 <CardTitle>Post Meta</CardTitle>

@@ -97,7 +97,7 @@ export default async function BlogPostPage({
     return (
         <main className="mx-auto w-full max-w-6xl px-6 py-10">
             {/* Header: title + meta */}
-            <header className="mb-6">
+            <header className="mb-6 mt-16">
                 <h1 className="text-3xl font-extrabold leading-tight">
                     {post.title}
                 </h1>
