@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 
 import { ArrowDown, ArrowUp, Image as ImageIcon, Text, Trash2, X } from "lucide-react";
 
+//Type
 type TextBlock = { id: string; type: "text"; text: string };
 type ImageBlock = {
     id: string;
@@ -41,7 +42,7 @@ export default function AdminNewPostPage() {
     const [slug, setSlug] = useState("");
     const [excerpt, setExcerpt] = useState("");
 
-    // ✅ NEW: date, location, tags
+    // Date, location, tags
     const [postDate, setPostDate] = useState(""); // date string
     const [location, setLocation] = useState("");
     const [author, setAuthor] = useState("");
@@ -122,7 +123,7 @@ export default function AdminNewPostPage() {
         }
     };
 
-    // ✅ NEW: Tags helpers
+    // Tags helpers
     const normalizeTag = (raw: string) => raw.trim().replace(/\s+/g, " ");
 
     const addTag = (raw: string) => {
@@ -190,9 +191,7 @@ export default function AdminNewPostPage() {
                 ),
             });
 
-            // 成功後
             console.log("Created post:", postId);
-            // router.push("/admin/posts"); ← 後で追加
         } catch (e) {
             setPageError(e instanceof Error ? e.message : "Save failed.");
         }
@@ -200,7 +199,7 @@ export default function AdminNewPostPage() {
 
     return (
         <main className="bg-[#a9a9a9]">
-            <section className="mx-auto w-full max-w-6xl px-6 py-12">
+            <section className="mt-8 mx-auto w-full max-w-6xl px-6 py-12">
                 {/* Top bar */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -210,14 +209,7 @@ export default function AdminNewPostPage() {
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <Button asChild variant="outline">
-                            <Link href="/admin">Back</Link>
-                        </Button>
-                        <Button type="button" onClick={handleSave}>
-                            Save
-                        </Button>
-                    </div>
+
                 </div>
 
                 {pageError && <p className="mt-4 text-sm text-red-500">{pageError}</p>}
@@ -268,19 +260,7 @@ export default function AdminNewPostPage() {
                             <Separator />
 
                             {/* Block actions */}
-                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div className="text-sm font-semibold text-black">Content Blocks</div>
-                                <div className="flex flex-wrap gap-2">
-                                    <Button type="button" variant="outline" onClick={addTextBlock}>
-                                        <Text className="mr-2 h-4 w-4" />
-                                        Add Text
-                                    </Button>
-                                    <Button type="button" variant="outline" onClick={addImageBlock}>
-                                        <ImageIcon className="mr-2 h-4 w-4" />
-                                        Add Image
-                                    </Button>
-                                </div>
-                            </div>
+                            <div className="text-sm font-semibold text-black">Content Blocks</div>
 
                             {/* Blocks list */}
                             <div className="space-y-4">
@@ -288,7 +268,7 @@ export default function AdminNewPostPage() {
                                     const isUploading = uploadingIds[block.id] === true;
 
                                     return (
-                                        <Card key={block.id} className="rounded-2xl">
+                                        <Card key={block.id} className="rounded-2xl bg-gray-100">
                                             <CardHeader className="pb-3">
                                                 <div className="flex items-start justify-between gap-3">
                                                     <div className="space-y-1">
@@ -414,6 +394,16 @@ export default function AdminNewPostPage() {
                                         </Card>
                                     );
                                 })}
+                            </div>
+                            <div className="flex flex-wrap flex-row-reverse gap-2">
+                                <Button className="cursor-pointer" type="button" variant="outline" onClick={addTextBlock}>
+                                    <Text className="mr-2 h-4 w-4" />
+                                    Add Text
+                                </Button>
+                                <Button className="cursor-pointer" type="button" variant="outline" onClick={addImageBlock}>
+                                    <ImageIcon className="mr-2 h-4 w-4" />
+                                    Add Image
+                                </Button>
                             </div>
                         </CardContent>
                     </Card>
@@ -576,10 +566,10 @@ export default function AdminNewPostPage() {
 
                             <CardContent className="flex flex-wrap gap-3 sm:flex-row">
                                 <Button asChild variant="outline" className="w-full">
-                                    <Link href="/admin/posts">Post list</Link>
-                                </Button>
-                                <Button asChild className="w-full">
                                     <Link href="/admin">Dashboard</Link>
+                                </Button>
+                                <Button type="button" className="w-full cursor-pointer" onClick={handleSave}>
+                                    Submit
                                 </Button>
                             </CardContent>
                         </Card>
