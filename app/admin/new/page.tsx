@@ -3,7 +3,7 @@
 import { createPost } from "@/lib/posts/createPost"
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { uploadPostImage } from "@/lib/supabase/uploadPostImage";
 
 // Shadcn UI
@@ -34,6 +34,16 @@ function moveItem<T>(arr: T[], from: number, to: number) {
     const [item] = copy.splice(from, 1);
     copy.splice(to, 0, item);
     return copy;
+}
+
+const STORAGE_BUCKET = "blog-images";
+
+function buildPublicImageUrl(path: string) {
+    if (!path) return "";
+    if (/^https?:\/\//i.test(path)) return path;
+    const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (!base) return "";
+    return `${base}/storage/v1/object/public/${STORAGE_BUCKET}/${path}`;
 }
 
 
@@ -103,11 +113,13 @@ export default function AdminNewPostPage() {
     const [tagInput, setTagInput] = useState("");
     const [tags, setTags] = useState<string[]>([]);
 
+
     // Cover image
     const [coverImageUrl, setCoverImageUrl] = useState("");
     const [coverImageAlt, setCoverImageAlt] = useState("");
     const [coverImageCaption, setCoverImageCaption] = useState("");
     const [coverUploading, setCoverUploading] = useState(false);
+
 
     // Blocks
     const [blocks, setBlocks] = useState<Block[]>([
@@ -118,7 +130,7 @@ export default function AdminNewPostPage() {
     const [pageError, setPageError] = useState<string | null>(null);
     const [uploadingIds, setUploadingIds] = useState<Record<string, boolean>>({});
 
-    const canMoveUpDown = useMemo(() => blocks.length > 1, [blocks.length]);
+    const canMoveUpDown = () => blocks.length > 1;
 
     // Load draft once on mount
     useEffect(() => {
@@ -281,7 +293,6 @@ export default function AdminNewPostPage() {
         }
     };
 
-    // UI only (no DB save yet)
     const handleSave = async () => {
         setPageError(null);
 
@@ -329,15 +340,13 @@ export default function AdminNewPostPage() {
         <main className="bg-[#a9a9a9]">
             <section className="mt-8 mx-auto w-full max-w-6xl px-6 py-12">
                 {/* Top bar */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-4">
                     <div>
                         <h1 className="text-3xl font-extrabold tracking-tight text-black">New Post</h1>
                         <p className="mt-1 text-sm text-black/70">
                             Add text and image blocks and arrange them in any order.
                         </p>
                     </div>
-
-
                 </div>
 
                 {pageError && <p className="mt-4 text-sm text-red-500">{pageError}</p>}
@@ -466,11 +475,17 @@ export default function AdminNewPostPage() {
 
                                                             {block.url ? (
                                                                 <div className="space-y-3">
-                                                                    <img
-                                                                        src={block.url}
-                                                                        alt={block.alt || block.caption || ""}
-                                                                        className="w-full rounded-xl border"
-                                                                    />
+                                                                    {buildPublicImageUrl(block.url) ? (
+                                                                        <img
+                                                                            src={buildPublicImageUrl(block.url)}
+                                                                            alt={block.alt || block.caption || ""}
+                                                                            className="w-full rounded-xl border"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="rounded-xl border p-4 text-sm text-black/70">
+                                                                            Image path saved, preview unavailable.
+                                                                        </div>
+                                                                    )}
                                                                     <div className="text-xs text-black/60 break-all">{block.url}</div>
                                                                 </div>
                                                             ) : (
@@ -547,11 +562,17 @@ export default function AdminNewPostPage() {
                             <CardContent className="space-y-4">
                                 {coverImageUrl ? (
                                     <div className="space-y-3">
-                                        <img
-                                            src={coverImageUrl}
-                                            alt={coverImageAlt || coverImageCaption || ""}
-                                            className="w-full rounded-xl border"
-                                        />
+                                        {buildPublicImageUrl(coverImageUrl) ? (
+                                            <img
+                                                src={buildPublicImageUrl(coverImageUrl)}
+                                                alt={coverImageAlt || coverImageCaption || ""}
+                                                className="w-full rounded-xl border"
+                                            />
+                                        ) : (
+                                            <div className="rounded-xl border p-4 text-sm text-black/70">
+                                                Image path saved, preview unavailable.
+                                            </div>
+                                        )}
                                         <div className="text-xs text-black/60 break-all">{coverImageUrl}</div>
                                         <div>
                                             <Button type="button" variant="outline" onClick={() => setCoverImageUrl("")}>
