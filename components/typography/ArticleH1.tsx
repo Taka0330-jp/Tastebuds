@@ -7,7 +7,7 @@ type ArticleH1Props = {
 };
 
 export function ArticleH1({
-    as = "h1",
+    as = "h2",
     children,
     className = "",
 }: ArticleH1Props) {

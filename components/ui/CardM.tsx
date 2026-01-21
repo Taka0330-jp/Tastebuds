@@ -6,16 +6,12 @@ import { BodySm } from "../typography/BodySm";
 import { CtaPrimary } from "../typography/CtaPrimary";
 import { PostCard } from "@/lib/posts";
 import { useRouter } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
     posts?: PostCard;
 };
 
-export default function BlogCard({ posts }: Props) {
+export default function CardM({ posts }: Props) {
     const router = useRouter();
 
     const title = posts?.title ?? "Card Heading title";
@@ -29,12 +25,7 @@ export default function BlogCard({ posts }: Props) {
     const location = posts?.location ?? "Location";
 
 
-
     const handleGo = () => {
-        try {
-            ScrollTrigger.getAll().forEach((st) => st.kill(true));
-        } catch { }
-
         router.push(`/blog/${posts?.slug}`);
     };
 
@@ -78,7 +69,7 @@ export default function BlogCard({ posts }: Props) {
                             height={48}
                         />
                     </div>
-
+                    {/* Tags */}
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <CtaPrimary
@@ -90,6 +81,7 @@ export default function BlogCard({ posts }: Props) {
                             </CtaPrimary>
                         ))}
 
+                        {/* Excerpt */}
                         <BodySm className="text-text-inverse">{excerpt}</BodySm>
                     </div>
 

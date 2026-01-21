@@ -38,17 +38,17 @@ export default function CardL({ posts }: Props) {
                     handleGo();
                 }
             }}
-            className="group border border-white md:flex flex-row-reverse p-1 gap-4 cursor-pointer"
+            className="group border h-auto md:h-110 border-white md:flex flex-row-reverse p-1 gap-4 cursor-pointer"
         >
             {/* Thumbnail */}
-            <div className="relative w-full h-80">
+            <div className="relative w-full ">
                 {posts.cover_url ? (
                     <Image
                         src={posts.cover_url}
                         alt={posts.cover_image_alt ?? posts.title}
                         width={1200}
                         height={800}
-                        className="h-full w-full object-cover"
+                        className="h-80 md:h-full w-full object-cover"
                     />
                 ) : null}
 

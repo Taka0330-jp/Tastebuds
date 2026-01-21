@@ -56,3 +56,36 @@ export async function getRecentPosts(limit = 4): Promise<PostCard[]> {
         })) ?? []
     );
 }
+
+export async function getAllPosts(): Promise<PostCard[]> {
+    const { data, error } = await supabase
+        .from("posts")
+        .select(
+            `
+      id,
+      slug,
+      title,
+      excerpt,
+      tags,
+      location,
+      published_at,
+      created_at,
+      cover_image_path,
+      cover_image_alt
+      `
+        )
+        .order("published_at", { ascending: false, nullsFirst: false })
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("getAllPosts error", error);
+        return []
+    }
+
+    return (
+        data?.map((post) => ({
+            ...post,
+            cover_url: buildCoverUrl(post.cover_image_path),
+        })) ?? []
+    );
+}
