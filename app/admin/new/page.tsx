@@ -101,7 +101,7 @@ export default function AdminNewPostPage() {
     const didHydrateDraftRef = useRef(false);
 
 
-    // Post meta (UI only for now)
+    // Post meta
     const [title, setTitle] = useState("");
     const [slug, setSlug] = useState("");
     const [excerpt, setExcerpt] = useState("");
