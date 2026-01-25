@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import InstagramIcon from "./icons/InstagramIcon";
-import TikTokIcon from "./icons/TikTok";
+import InstagramIcon from "../icons/InstagramIcon";
+import TikTokIcon from "../icons/TikTok";
 import { CtaPrimary } from "@/components/typography/CtaPrimary";
 
 export default function Header() {

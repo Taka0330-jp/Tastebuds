@@ -36,7 +36,7 @@ export default function PinnedAnimationSection() {
         masterTl.current = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
-                start: "top top",
+                start: "top 70%",
                 toggleActions: "play none none none",
                 // toggleActions: "onEnter onLeave onEnterBack onLeaveBack"
             },

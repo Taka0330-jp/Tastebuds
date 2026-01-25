@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Rubik, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const rubik = Rubik({ variable: "--font-rubik", subsets: ["latin"] });
 const sourceSans = Source_Sans_3({ variable: "--font-source-sans-3", subsets: ["latin"] });
