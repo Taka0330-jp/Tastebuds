@@ -1,6 +1,6 @@
 // app/admin/page.tsx
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/shadcn/card";
 import { PencilRuler, ClipboardList } from "lucide-react";
 import { DisplayH1 } from "@/components/typography/DisplayH1";
 import { ArticleH1 } from "@/components/typography/ArticleH1";

@@ -7,13 +7,13 @@ import { useEffect, useRef, useState } from "react";
 import { uploadPostImage } from "@/lib/supabase/uploadPostImage";
 
 // Shadcn UI
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/shadcn/card";
+import { Button } from "@/components/ui/shadcn/button";
+import { Input } from "@/components/ui/shadcn/input";
+import { Label } from "@/components/ui/shadcn/label";
+import { Textarea } from "@/components/ui/shadcn/textarea";
+import { Separator } from "@/components/ui/shadcn/separator";
+import { Badge } from "@/components/ui/shadcn/badge";
 
 import { ArrowDown, ArrowUp, Image as ImageIcon, Text, Trash2, X } from "lucide-react";
 

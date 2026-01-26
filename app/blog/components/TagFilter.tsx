@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import { PostCard } from '@/lib/posts'
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/shadcn/button';
 
 
 type Props = {
