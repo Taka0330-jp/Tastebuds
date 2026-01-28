@@ -64,7 +64,7 @@ export default function TagFilter({ tagInfo, }: Props) {
             </div>
             {
                 isOpen && (
-                    <Card className='rounded-lg bg-black border-gray-100 px-4 mx-2'>
+                    <Card className='rounded-lg bg-black border-non px-4 mx-2'>
                         <div className='flex flex-wrap'>
                             {unPickedTags.map((tag) => (
                                 <Button
