@@ -24,8 +24,8 @@ export default function TagFilter({ tagInfo, }: Props) {
 
         const shuffled = arrayToShuffled(tags)
 
-        const pickedTags = shuffled.slice(0, 4);
-        const unPickedTags = shuffled.slice(4)
+        const pickedTags = shuffled.slice(0, 5);
+        const unPickedTags = shuffled.slice(5)
 
         const timerId = window.setTimeout(() => {
             setPickedTags(pickedTags);
@@ -45,16 +45,16 @@ export default function TagFilter({ tagInfo, }: Props) {
 
     return (
         <div>
-            <div className='flex flex-wrap' >
+            <div className='flex flex-wrap gap-4' >
                 {pickedTags.map((tag) => (
                     <Button
                         key={tag}
-                        className='bg-gray-100 text-black hover:text-white border mx-2 my-2 cursor-pointer' >{tag}</Button>
+                        className='bg-gray-100 text-black hover:text-white border my-2 cursor-pointer' >{tag}</Button>
                 ))}
                 <Button
                     onClick={handleClick}
                     className={cn(
-                        'border mx-2 my-2 cursor-pointer',
+                        'border my-2 cursor-pointer',
                         isOpen
                             ? 'bg-black text-white'
                             : 'bg-gray-100 text-black hover:text-white'
@@ -64,7 +64,7 @@ export default function TagFilter({ tagInfo, }: Props) {
             </div>
             {
                 isOpen && (
-                    <Card className='rounded-lg bg-black border-non px-4 mx-2'>
+                    <Card className='rounded-lg bg-black border-gray-900 px-4 mt-4'>
                         <div className='flex flex-wrap'>
                             {unPickedTags.map((tag) => (
                                 <Button
