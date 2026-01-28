@@ -9,9 +9,11 @@ import { cn } from '@/lib/utils';
 
 type Props = {
     tagInfo: PostCard[];
+    selectedTag: string | null;
+    onSelectTag: (tag: string | null) => void
 }
 
-export default function TagFilter({ tagInfo, }: Props) {
+export default function TagFilter({ tagInfo, selectedTag, onSelectTag }: Props) {
 
     const [pickedTags, setPickedTags] = useState<string[]>([]);
     const [unPickedTags, setUnPickedTags] = useState<string[]>([]);
@@ -37,10 +39,6 @@ export default function TagFilter({ tagInfo, }: Props) {
         };
     }, [tagInfo]);
 
-    const handleClick = () => {
-        setIsOpen(prev => !prev)
-    }
-
 
 
     return (
@@ -48,15 +46,23 @@ export default function TagFilter({ tagInfo, }: Props) {
             <div className='flex flex-wrap gap-4' >
                 {pickedTags.map((tag) => (
                     <Button
+                        onClick={() => onSelectTag(selectedTag === tag ? null : tag)}
                         key={tag}
-                        className='text-gray-100 bg-black hover:text-black hover:bg-gray-100 border my-2 cursor-pointer' >{tag}</Button>
+                        className={cn(
+                            'border my-2 cursor-pointer',
+                            selectedTag === tag
+                                ? 'text-black bg-gray-100 hover:text-black hover:bg-gray-100'
+                                : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100'
+                        )}
+                    >{tag}</Button>
+                    //className='text-gray-100 bg-black hover:text-black hover:bg-gray-100 border my-2 cursor-pointer'
                 ))}
                 <Button
-                    onClick={handleClick}
+                    onClick={() => setIsOpen(prev => !prev)}
                     className={cn(
                         'border my-2 cursor-pointer',
                         isOpen
-                            ? 'text-black bg-gray-100 hover:text-gray-100 hover:bg-black'
+                            ? 'text-black bg-gray-100 hover:text-black hover:bg-gray-100'
                             : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100 '
                     )}
                 >
@@ -65,11 +71,17 @@ export default function TagFilter({ tagInfo, }: Props) {
             {
                 isOpen && (
                     <Card className='rounded-lg bg-black border-gray-900 px-4 mt-4'>
-                        <div className='flex flex-wrap'>
+                        <div className='flex flex-wrap gap-4'>
                             {unPickedTags.map((tag) => (
                                 <Button
+                                    onClick={() => onSelectTag(selectedTag === tag ? null : tag)}
                                     key={tag}
-                                    className='bg-gray-100 text-black hover:text-white border mx-2 my-2 cursor-pointer' >{tag}</Button>
+                                    className={cn(
+                                        'border my-2 cursor-pointer',
+                                        selectedTag === tag
+                                            ? 'text-black bg-gray-100 hover:text-black hover:bg-gray-100'
+                                            : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100'
+                                    )} >{tag}</Button>
                             ))}
                         </div>
                     </Card>
