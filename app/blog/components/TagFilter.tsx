@@ -49,15 +49,15 @@ export default function TagFilter({ tagInfo, }: Props) {
                 {pickedTags.map((tag) => (
                     <Button
                         key={tag}
-                        className='bg-gray-100 text-black hover:text-white border my-2 cursor-pointer' >{tag}</Button>
+                        className='text-gray-100 bg-black hover:text-black hover:bg-gray-100 border my-2 cursor-pointer' >{tag}</Button>
                 ))}
                 <Button
                     onClick={handleClick}
                     className={cn(
                         'border my-2 cursor-pointer',
                         isOpen
-                            ? 'bg-black text-white'
-                            : 'bg-gray-100 text-black hover:text-white'
+                            ? 'text-black bg-gray-100 hover:text-gray-100 hover:bg-black'
+                            : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100 '
                     )}
                 >
                     More...</Button>
