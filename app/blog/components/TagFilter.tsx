@@ -51,8 +51,8 @@ export default function TagFilter({ tagInfo, selectedTag, onSelectTag }: Props) 
                         className={cn(
                             'border my-2 cursor-pointer',
                             selectedTag === tag
-                                ? 'text-black bg-gray-100 hover:text-black hover:bg-gray-100'
-                                : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100'
+                                ? 'text-black bg-brand-primary hover:text-black hover:bg-gray-100'
+                                : 'text-gray-100 bg-black hover:text-black hover:bg-brand-primary'
                         )}
                     >{tag}</Button>
                     //className='text-gray-100 bg-black hover:text-black hover:bg-gray-100 border my-2 cursor-pointer'
@@ -79,8 +79,8 @@ export default function TagFilter({ tagInfo, selectedTag, onSelectTag }: Props) 
                                     className={cn(
                                         'border my-2 cursor-pointer',
                                         selectedTag === tag
-                                            ? 'text-black bg-gray-100 hover:text-black hover:bg-gray-100'
-                                            : 'text-gray-100 bg-black hover:text-black hover:bg-gray-100'
+                                            ? 'text-black bg-brand-primary hover:text-black hover:bg-gray-100'
+                                            : 'text-gray-100 bg-black hover:text-black hover:bg-brand-primary'
                                     )} >{tag}</Button>
                             ))}
                         </div>
