@@ -11,7 +11,6 @@ export default function AdminPage() {
 
     return (
         <main className="min-h-[calc(100vh-0px)] ">
-            {/* 既存のHeader/Footerが layout.tsx にある前提で、ここは中身だけ */}
             <section className="mx-auto w-full max-w-6xl px-6 py-20">
                 {/* Greeting */}
                 <DisplayH1>
