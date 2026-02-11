@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import InstagramIcon from "../icons/InstagramIcon";
 import TikTokIcon from "../icons/TikTok";
-import SearchBar from "../ui/SearchBar";
+// import SearchBar from "../ui/SearchBar";
 
 
 export default function Footer() {
@@ -17,11 +17,12 @@ export default function Footer() {
                         alt="logo"
                         width={200}
                         height={180}
+                        className="w-30 md:w-40"
                     />
                 </div>
 
                 {/* Right navigation */}
-                <div className="flex flex-col">
+                <div className="flex flex-col md:w-100">
 
                     {/* Social Icon */}
                     <div className="flex gap-4 border-b pb-4">
@@ -58,20 +59,20 @@ export default function Footer() {
     hover:opacity-70
     focus-visible:outline-none
     focus-visible:ring-2 focus-visible:ring-white/60">
-                            Blog
+                            All Posts
                         </Link>
-                        <Link href="/contact" className="transition-opacity
+                        {/* <Link href="/contact" className="transition-opacity
     hover:opacity-70
     focus-visible:outline-none
     focus-visible:ring-2 focus-visible:ring-white/60">
                             Contact
-                        </Link>
-                        <div className="w-full">
+                        </Link> */}
+                        {/* <div className="w-full">
                             <SearchBar />
-                        </div>
+                        </div> */}
                     </div>
-                    <p className="text-sm text-white/70">
-                        &copy; 2025 TasteBuds
+                    <p className="text-sm pt-4 text-white/70">
+                        &copy; 2026 TasteBuds
                     </p>
                 </div>
 
