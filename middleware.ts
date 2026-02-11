@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 export async function middleware(request: NextRequest) {
-    // middleware内では request ごとに response を作って、cookie を反映させます
     let response = NextResponse.next({
         request: {
             headers: request.headers,
@@ -19,7 +18,7 @@ export async function middleware(request: NextRequest) {
                     return request.cookies.getAll();
                 },
                 setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value, options }) => {
+                    cookiesToSet.forEach(({ name, value }) => {
 
                         request.cookies.set(name, value,);
                     });
