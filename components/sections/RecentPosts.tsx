@@ -7,12 +7,63 @@ import CardL from "../ui/CardL";
 import Image from "next/image";
 import { DisplayH2 } from "../typography/DisplayH2";
 import type { PostCard } from "@/lib/posts";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type Props = {
     posts: PostCard[];
 };
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function RecentPosts({ posts }: Props) {
+
+    const cardLRef = useRef<HTMLDivElement>(null);
+    const cardMRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (!cardLRef.current || !cardMRef.current) return;
+
+        gsap.fromTo(
+            cardLRef.current,
+            {
+                opacity: 0,
+                y: 30,
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: cardLRef.current,
+                    start: "top center",
+                    once: true,
+                },
+            }
+        );
+
+        gsap.fromTo(
+            cardMRef.current,
+            {
+                opacity: 0,
+                y: 30,
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.15,
+                scrollTrigger: {
+                    trigger: cardMRef.current,
+                    start: "top center",
+                    once: true,
+                },
+            }
+        );
+    }, { scope: cardLRef });
+
     return (
         <section
             className="bg-home-section py-12 relative z-10 mt-[90vh]"
@@ -41,10 +92,10 @@ export default function RecentPosts({ posts }: Props) {
 
             {/* BLOG CARDS */}
             <div className="flex flex-col gap-6 md:grid md:grid-cols-12 max-w-container mx-auto p-5 relative z-10">
-                <div className="col-span-12">
+                <div ref={cardLRef} className="col-span-12">
                     {posts[0] ? <CardL posts={posts[0]} /> : null}
                 </div>
-                <div className="gap-6 md:col-span-12 grid md:grid-cols-3">
+                <div ref={cardMRef} className="gap-6 md:col-span-12 grid md:grid-cols-3">
                     {posts[1] ? <CardM posts={posts[1]} /> : null}
                     {posts[2] ? <CardM posts={posts[2]} /> : null}
                     {posts[3] ? <CardM posts={posts[3]} /> : null}
