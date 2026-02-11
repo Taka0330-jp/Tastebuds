@@ -31,12 +31,12 @@ export default function HomeHero() {
             <div className="flex flex-col gap-1.5 md:grid md:grid-cols-12 max-w-container mx-auto p-5 relative z-10 mt-10  md:mt-20 lg:mt-30">
                 <div className="flex flex-col gap-1 md:col-start-1 md:col-span-7">
                     <div ref={headingRef}>
-                        <DisplayH1   className="text-text-inverse">
+                        <DisplayH1   className="text-heading-primary">
                             Your guide to Vancouver’s tastiest bites
                         </DisplayH1>
                     </div>
                     <div  ref={bodyRef}>
-                        <BodyXlg className="text-text-inverse">
+                        <BodyXlg className="text-gray-50">
                             Hey foodie friends! From hole-in-the-wall dumpling shops to trendy brunch spots, we’re all about sharing the flavors that make this city so delicious.
                         </BodyXlg>
                     </div>
