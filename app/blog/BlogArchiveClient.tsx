@@ -55,7 +55,7 @@ export default function BlogArchiveClient({ allPosts }: Props) {
                     <DisplayH1 className='text-text-inverse text-center mt-8'>Blog Post Archive</DisplayH1>
                 </div>
                 <div className='layout-grid-12 mt-12'>
-                    <div className='col-start-3 col-end-11'>
+                    <div className='col-span-12 md:col-start-3 md:col-end-11'>
                         <SearchPost setFilteredSearch={setFilteredSearch} />
                         <TagFilter tagInfo={allPosts} selectedTag={selectedTag} onSelectTag={setSelectedTag} />
                     </div>
