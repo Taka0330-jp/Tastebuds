@@ -23,17 +23,17 @@ export default function Header() {
     hover:opacity-70
     focus-visible:outline-none
     focus-visible:ring-2 focus-visible:ring-white/60">
-                            Blog
+                            All Posts
                         </CtaPrimary>
                     </Link>
-                    <Link href="/contact">
+                    {/* <Link href="/contact">
                         <CtaPrimary asChild className="text-text-inverse transition-opacity
     hover:opacity-70
     focus-visible:outline-none
     focus-visible:ring-2 focus-visible:ring-white/60">
                             Contact
                         </CtaPrimary>
-                    </Link>
+                    </Link> */}
                     <a
                         href="https://www.instagram.com/tastebudsvan/"
                         target="_blank"
