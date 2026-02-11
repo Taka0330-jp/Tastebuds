@@ -19,7 +19,9 @@ function SearchPost({ setFilteredSearch }: Props) {
 
     return (
         <form onSubmit={onSubmit}>
+            <label htmlFor="search" className="sr-only">Search</label>
             <Input
+                id='search'
                 type='search'
                 placeholder='e.g Cafe'
                 className='bg-gray-300 mb-4'
