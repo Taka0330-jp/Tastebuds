@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${rubik.variable} ${sourceSans.variable} antialiased bg-hero`}>
+      <body className={`${rubik.variable} ${sourceSans.variable} antialiased bg-hero min-h-dvh`}>
         <Header />
         {children}
         <Footer />

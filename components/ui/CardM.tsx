@@ -107,8 +107,6 @@ export default function CardM({ posts }: Props) {
                     </div>
                 </div>
             </div>
-
-
         </article>
     )
 }

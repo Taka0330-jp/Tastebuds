@@ -7,7 +7,7 @@ import TikTokIcon from "../icons/TikTok";
 
 export default function Footer() {
     return (
-        <footer className="relative z-999 w-full bg-header" >
+        <footer className="sticky top-full z-999 w-full bg-header" >
             <nav className="mx-auto flex justify-between items-center max-w-container p-4">
 
                 {/* Logo */}
