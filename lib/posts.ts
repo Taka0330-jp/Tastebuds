@@ -1,3 +1,7 @@
+// In this file, doing Three jobs
+// 1. set Type of blog post data
+// 2. get Data from Supabase
+// 3. generate url for cover image from supabase storage
 import { supabase } from "@/lib/supabase/server";
 
 export type PostCard = {
@@ -22,7 +26,7 @@ function buildCoverUrl(path: string | null) {
     return `${base}/storage/v1/object/public/blog-images/${path}`;
 }
 
-
+// This function is for home page
 export async function getRecentPosts(limit = 4): Promise<PostCard[]> {
     const { data, error } = await supabase
         .from("posts")
@@ -57,6 +61,7 @@ export async function getRecentPosts(limit = 4): Promise<PostCard[]> {
     );
 }
 
+// This function is for all posts page(blog archive)
 export async function getAllPosts(): Promise<PostCard[]> {
     const { data, error } = await supabase
         .from("posts")
