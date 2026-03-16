@@ -1,18 +1,23 @@
 "use client";
 
+//Next Image for Thumbnail and Arrow Icon
 import Image from "next/image";
+
+// Typography
 import { ArticleH3 } from "../typography/ArticleH3";
 import { BodySm } from "../typography/BodySm";
 import { CtaPrimary } from "../typography/CtaPrimary";
-import { PostCard } from "@/lib/posts";
-import { useRouter } from "next/navigation";
+
+// Only Import Types form data of post card
+import type { PostCard } from "@/lib/posts";
+
+import Link from "next/link"
 
 type Props = {
     posts?: PostCard;
 };
 
 export default function CardM({ posts }: Props) {
-    const router = useRouter();
 
     const title = posts?.title ?? "Card Heading title";
     const excerpt = posts?.excerpt ?? "Excerpt texts";
@@ -25,23 +30,11 @@ export default function CardM({ posts }: Props) {
     const location = posts?.location ?? "Location";
 
 
-    const handleGo = () => {
-        router.push(`/blog/${posts?.slug}`);
-    };
-
-
     return (
-        <article
-            role="link"
-            tabIndex={0}
-            onClick={handleGo}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleGo();
-                }
-            }}
+        <Link
+        href={`/blog/${posts?.slug}`}
             className="group border border-white flex flex-col p-1 cursor-pointer">
+
             {/* Thumbnail */}
             <div className="relative w-full h-80 overflow-hidden bg-amber-200">
                 {cover_url && (
@@ -108,7 +101,6 @@ export default function CardM({ posts }: Props) {
                 </div>
             </div>
 
-
-        </article>
+        </Link>
     )
 }
