@@ -1,43 +1,32 @@
 "use client";
 
+// Next Image for Thumbnail and Arrow Icon
 import Image from "next/image";
+
+// Import Typography
 import { ArticleH1 } from "../typography/ArticleH1";
 import { BodyLg } from "../typography/BodyLg";
 import { CtaPrimary } from "../typography/CtaPrimary";
+
+// Only Import Types form data of post card
 import type { PostCard } from "@/lib/posts";
-import { useRouter } from "next/navigation";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import Link from "next/link";
 
 type Props = {
     posts: PostCard;
 };
 
 export default function CardL({ posts }: Props) {
-    const router = useRouter();
-
-    const handleGo = () => {
-        try {
-            ScrollTrigger.getAll().forEach((st) => st.kill(true));
-        } catch { }
-
-        router.push(`/blog/${posts.slug}`);
-    };
 
     const tags = Array.isArray(posts.tags)
         ? posts.tags
         : posts.tags?.split(",").map((t) => t.trim()).filter(Boolean) ?? [];
 
     return (
-        <article
-            role="link"
-            tabIndex={0}
-            onClick={handleGo}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleGo();
-                }
-            }}
+        <Link
+            href={`/blog/${posts.slug}`}
+
             className="group border h-auto md:h-110 border-white md:flex flex-row-reverse p-1 gap-4 cursor-pointer"
         >
             {/* Thumbnail */}
@@ -73,6 +62,7 @@ export default function CardL({ posts }: Props) {
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <CtaPrimary
+                                asChild
                                 key={tag}
                                 className="border border-white text-text-inverse px-2 rounded-2xl"
                             >
@@ -97,6 +87,6 @@ export default function CardL({ posts }: Props) {
                     </div>
                 </div>
             </div>
-        </article>
+        </Link>
     );
 }

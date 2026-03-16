@@ -11,10 +11,10 @@ export function CtaPrimary({
     className = "",
     asChild = false,
 }: CtaPrimaryProps) {
-    const Comp = asChild ? "span" : "a";
+    const Tag = asChild ? "span" : "a";
 
     return (
-        <Comp
+        <Tag
             className={`
         font-sans font-semibold
         leading-[1.2]
@@ -23,6 +23,6 @@ export function CtaPrimary({
             style={{ fontSize: "var(--fs-cta-primary)" }}
         >
             {children}
-        </Comp>
+        </Tag>
     );
 }

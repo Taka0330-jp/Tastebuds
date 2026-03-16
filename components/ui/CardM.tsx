@@ -1,6 +1,6 @@
 "use client";
 
-//Next Image for Thumbnail and Arrow Icon
+// Next Image for Thumbnail and Arrow Icon
 import Image from "next/image";
 
 // Typography
