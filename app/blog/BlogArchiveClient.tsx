@@ -1,10 +1,16 @@
 "use client"
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react';
+
+//typography
 import { DisplayH1 } from '@/components/typography/DisplayH1';
+
+//components
 import TagFilter from './components/TagFilter';
-import CardM from '../../components/ui/CardM'
-import { PostCard } from '@/lib/posts';
+import CardM from '../../components/ui/CardM';
 import SearchPost from './components/SearchPost';
+
+// import type
+import type { PostCard } from '@/lib/posts';
 
 type Props = {
     allPosts: PostCard[];

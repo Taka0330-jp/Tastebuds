@@ -1,4 +1,3 @@
-import React from 'react'
 
 import { getAllPosts } from '@/lib/posts'
 import BlogArchiveClient from './BlogArchiveClient';

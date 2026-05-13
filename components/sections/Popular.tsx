@@ -54,9 +54,9 @@ export default function Popular({posts}: Props) {
                 </div>
                 <div className="md:grid md:grid-cols-12 gap-6 max-w-container mx-auto p-5  relative z-10">
                     <div ref={cardMRef} className="md:col-span-12 grid gap-6 md:grid-cols-3">
+                    {posts[3] && <CardM posts={posts[3]} />}
                     {posts[4] && <CardM posts={posts[4]} />}
                     {posts[5] && <CardM posts={posts[5]} />}
-                    {posts[6] && <CardM posts={posts[6]} />}
                     </div>
                 </div>
             </section>
